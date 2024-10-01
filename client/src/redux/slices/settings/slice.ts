@@ -33,9 +33,14 @@ export const slice = createSlice({
         state.weatherInfo = action.payload;
       }
     },
+    reset: (state: State) => {
+      state.weatherApiKey = "";
+      state.weatherUrl = "";
+      state.weatherInfo = null;
+    },
   },
 });
 
-export const { setSettings, setWeatherInfo } = slice.actions;
+export const { setSettings, setWeatherInfo, reset } = slice.actions;
 
 export default slice.reducer;
