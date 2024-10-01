@@ -19,12 +19,16 @@ interface Credentials extends JwtPayload {
   given_name: string;
 }
 
+// ===== React Router ===== //
+import { useNavigate } from "react-router-dom";
+
 // ===== Redux ===== //
 import { useAppDispatch } from "redux/hooks";
 import { setUser } from "redux/slices/user/slice";
 
 export default function GoogleAuth() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleOnSuccess = (resp: CredentialResponse) => {
     const credentials = jwtDecode(
@@ -41,6 +45,8 @@ export default function GoogleAuth() {
       };
 
       dispatch(setUser(payload));
+
+      navigate("/dashboard");
     }
   };
 

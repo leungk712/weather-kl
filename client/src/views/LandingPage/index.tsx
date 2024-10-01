@@ -1,6 +1,7 @@
 // ===== Material UI ===== //
 
 // ===== Components ===== //
+import Home from "components/Home";
 
 // ===== Constants ===== //
 
@@ -13,9 +14,5 @@
 // ===== Styles ===== //
 
 export default function LandingPage() {
-  return (
-    <>
-      <h2>Hello World</h2>
-    </>
-  );
+  return <Home />;
 }

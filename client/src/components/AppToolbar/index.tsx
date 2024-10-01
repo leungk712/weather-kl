@@ -19,8 +19,8 @@ import { useNavigate } from "react-router-dom";
 export default function AppToolbar() {
   const navigate = useNavigate();
 
-  const handleLoginClick = () => {
-    navigate("/login");
+  const handleNavigation = (path = "/") => {
+    navigate(path);
   };
 
   return (
@@ -34,7 +34,16 @@ export default function AppToolbar() {
             backgroundColor: "#87A878",
           }}
         >
-          <Typography data-testid="app-toolbar-title" variant="h6">
+          <Typography
+            data-testid="app-toolbar-title"
+            variant="h6"
+            onClick={() => handleNavigation()}
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+          >
             ResFrac Kev L
           </Typography>
 
@@ -51,7 +60,7 @@ export default function AppToolbar() {
               data-testid="app-toolbar-login-btn"
               color="inherit"
               variant="outlined"
-              onClick={() => handleLoginClick()}
+              onClick={() => handleNavigation("login")}
             >
               Login
             </Button>
