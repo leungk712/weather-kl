@@ -3,6 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // ===== API ===== //
 
 // ===== Constants ===== //
+import { API_LIFECYCLE_STATUS } from "redux/statuses";
+const { PENDING, FULFILLED, REJECTED } = API_LIFECYCLE_STATUS;
+import { statusAndError } from "redux/statuses";
+
+// ===== Endpoints ===== //
+import { fetchWeather } from "./endpoints";
 
 // ===== Helpers ===== //
 
@@ -13,6 +19,7 @@ export const initialState: State = {
   weatherApiKey: "",
   weatherUrl: "",
   weatherInfo: null,
+  fetchWeatherStatus: statusAndError,
 };
 
 export const slice = createSlice({
@@ -38,6 +45,28 @@ export const slice = createSlice({
       state.weatherUrl = "";
       state.weatherInfo = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchWeather.pending, (state: State) => {
+        state.fetchWeatherStatus = {
+          status: PENDING,
+          error: "",
+        };
+      })
+      .addCase(
+        fetchWeather.fulfilled,
+        (state: State, action: PayloadAction<WeatherStackApiResponse>) => {
+          state.fetchWeatherStatus.status = FULFILLED;
+          state.weatherInfo = action.payload;
+        }
+      )
+      .addCase(fetchWeather.rejected, (state: State, action) => {
+        state.fetchWeatherStatus = {
+          status: REJECTED,
+          error: action.error.message,
+        };
+      });
   },
 });
 
