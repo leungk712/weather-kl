@@ -1,7 +1,11 @@
+// ===== Interfaces ===== //
+import { StatusAndError } from "redux/statuses";
+
 export interface State {
   weatherApiKey: string;
   weatherUrl: string;
   weatherInfo: WeatherStackApiResponse | null;
+  fetchWeatherStatus: StatusAndError;
 }
 
 export type SettingsPayload = Pick<State, "weatherApiKey" | "weatherUrl">;

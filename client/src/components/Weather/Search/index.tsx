@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 
 // ===== Material UI ===== //
 import {
@@ -26,11 +25,10 @@ import { icons } from "./constants";
 // ===== Helpers ===== //
 
 // ===== Interfaces ===== //
-import { WeatherStackApiResponse } from "redux/slices/settings/interfaces";
 
 // ===== Redux ===== //
 import { useAppSelector, useAppDispatch } from "redux/hooks";
-import { setWeatherInfo } from "redux/slices/settings/slice";
+import { fetchWeather } from "redux/slices/settings/endpoints";
 
 // ===== Styles ===== //
 
@@ -64,21 +62,26 @@ export default function Search() {
     setUnit(newUnit);
   };
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     const query = `&query=${city.replace(" ", "%20")}&units=${unit}`;
 
-    try {
-      await axios
-        .get(`${weatherUrl}${weatherApiKey}${query}`)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((resp: any) => {
-          dispatch(setWeatherInfo(resp.data as WeatherStackApiResponse));
+    const payload = {
+      weatherUrl,
+      weatherApiKey,
+      query,
+    };
 
-          setIsDialogOpen(true);
-        });
-    } catch (err) {
-      console.error("unable to retrieve weather information - api error", err);
-    }
+    dispatch(fetchWeather(payload))
+      .unwrap()
+      .then(() => {
+        setIsDialogOpen(true);
+      })
+      .catch((err) => {
+        console.error(
+          "unable to retrieve weather information - api error",
+          err
+        );
+      });
   };
 
   const handleCloseDiaglog = () => {
