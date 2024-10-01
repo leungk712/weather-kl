@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // ===== API ===== //
 
@@ -7,17 +7,35 @@ import { createSlice } from "@reduxjs/toolkit";
 // ===== Helpers ===== //
 
 // // ===== Interfaces ===== //
-import { State } from "./interfaces";
+import { State, SettingsPayload, WeatherStackApiResponse } from "./interfaces";
 
 export const initialState: State = {
-  weatherApi: "",
+  weatherApiKey: "",
   weatherUrl: "",
+  weatherInfo: null,
 };
 
 export const slice = createSlice({
   name: "settings",
   initialState,
-  reducers: {},
+  reducers: {
+    setSettings: (state: State, action: PayloadAction<SettingsPayload>) => {
+      const { weatherApiKey, weatherUrl } = action.payload;
+
+      state.weatherApiKey = weatherApiKey;
+      state.weatherUrl = weatherUrl;
+    },
+    setWeatherInfo: (
+      state: State,
+      action: PayloadAction<WeatherStackApiResponse>
+    ) => {
+      if (action.payload) {
+        state.weatherInfo = action.payload;
+      }
+    },
+  },
 });
+
+export const { setSettings, setWeatherInfo } = slice.actions;
 
 export default slice.reducer;

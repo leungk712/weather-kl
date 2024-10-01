@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardHeader,
+  Divider,
   InputAdornment,
   Stack,
   TextField,
@@ -48,6 +49,8 @@ export default function Login() {
         title="Login"
         sx={{ width: "100%" }}
       />
+
+      <Divider />
 
       <Stack
         sx={{

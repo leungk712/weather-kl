@@ -6,8 +6,10 @@ import { Box, Container } from "@mui/material";
 // ===== Components ===== //
 import AppFooter from "components/AppFooter";
 import AppToolbar from "components/AppToolbar";
+import Dashboard from "views/Dashboard";
 import LandingPage from "./views/LandingPage";
 import LoginView from "views/Login";
+import SettingsView from "views/Settings";
 
 function App() {
   const location = useLocation();
@@ -40,6 +42,8 @@ function App() {
         <Routes key={location.pathname} location={location}>
           <Route index={true} element={<LandingPage />} />
           <Route path="/login" element={<LoginView />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/settings" element={<SettingsView />} />
         </Routes>
       </Box>
 
