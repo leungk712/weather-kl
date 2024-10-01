@@ -1,11 +1,20 @@
 // ===== Material UI ===== //
-import { AppBar, Box, Toolbar, Typography, Button, Stack } from "@mui/material";
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  Stack,
+} from "@mui/material";
 
 // ===== Components ===== //
 
 // ===== Constants ===== //
 
 // ===== Helpers ===== //
+import { generateAvatarName } from "./helpers";
 
 // ===== Interfaces ===== //
 
@@ -13,13 +22,23 @@ import { AppBar, Box, Toolbar, Typography, Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 // ===== Redux ===== //
+import { useAppSelector } from "redux/hooks";
 
 // ===== Styles ===== //
 
 export default function AppToolbar() {
   const navigate = useNavigate();
 
+  const { isLoggedIn, user } = useAppSelector((state) => state.user);
+  const { firstName, lastName } = user;
+
+  const avatarText = generateAvatarName(firstName, lastName);
+
   const handleNavigation = (path = "/") => {
+    if (path === "settings" && !isLoggedIn) {
+      return;
+    }
+
     navigate(path);
   };
 
@@ -52,6 +71,7 @@ export default function AppToolbar() {
               data-testid="app-toolbar-settings-btn"
               color="inherit"
               variant="outlined"
+              onClick={() => handleNavigation("settings")}
             >
               Settings
             </Button>
@@ -64,6 +84,16 @@ export default function AppToolbar() {
             >
               Login
             </Button>
+
+            {isLoggedIn && avatarText ? (
+              <Avatar
+                data-testid="avatar-content"
+                variant="square"
+                sx={{ backgroundColor: "#7e57c2" }}
+              >
+                {avatarText}
+              </Avatar>
+            ) : null}
           </Stack>
         </Toolbar>
       </AppBar>

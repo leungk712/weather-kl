@@ -33,7 +33,8 @@ function App() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          minHeight: "95vh",
+          minHeight: "85vh",
+          flexGrow: 1,
         }}
       >
         <Routes key={location.pathname} location={location}>
