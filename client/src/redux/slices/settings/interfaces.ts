@@ -1,4 +1,6 @@
 export interface State {
-  weatherApi: string;
+  weatherApiKey: string;
   weatherUrl: string;
 }
+
+export type SettingsPayload = Pick<State, "weatherApiKey" | "weatherUrl">;

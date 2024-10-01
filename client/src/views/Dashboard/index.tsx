@@ -1,7 +1,7 @@
 // ===== Material UI ===== //
 
 // ===== Components ===== //
-import Settings from "components/Weather/Settings";
+import Search from "components/Weather/Search";
 
 // ===== Constants ===== //
 
@@ -13,6 +13,6 @@ import Settings from "components/Weather/Settings";
 
 // ===== Styles ===== //
 
-export default function SettingsView() {
-  return <Settings />;
+export default function Dashboard() {
+  return <Search />;
 }
