@@ -12,12 +12,12 @@ import {
   InputAdornment,
   Stack,
   TextField,
-  ToggleButton,
-  ToggleButtonGroup,
+  Tooltip,
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 // ===== Components ===== //
+import UnitToggle from "components/Weather/UnitToggle";
 
 // ===== Constants ===== //
 import { icons } from "./constants";
@@ -42,6 +42,8 @@ export default function Search() {
   const [unit, setUnit] = useState<string>("f");
   const [weatherInfo, setWeatherInfo] = useState<unknown | null>(null);
 
+  const searchDisabled = !weatherApiKey || !weatherUrl;
+
   const handleInput = (
     evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -49,7 +51,7 @@ export default function Search() {
   };
 
   const handleSetUnit = (
-    _event: React.MouseEvent<HTMLElement>,
+    _evt: React.MouseEvent<HTMLElement>,
     newUnit: string | null
   ) => {
     if (!newUnit) {
@@ -115,7 +117,7 @@ export default function Search() {
             }}
           >
             {icons?.map((WeatherIcon) => (
-              <IconButton size="large" disabled={true}>
+              <IconButton key={WeatherIcon.type} size="large" disabled={true}>
                 <WeatherIcon.icon />
               </IconButton>
             ))}
@@ -130,46 +132,26 @@ export default function Search() {
               slotProps={{
                 input: {
                   endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        data-testid="weather-search-btn"
-                        onClick={() => handleSearch()}
-                      >
-                        <SearchOutlinedIcon />
-                      </IconButton>
-                    </InputAdornment>
+                    <Tooltip
+                      title={searchDisabled ? "settings invalid" : "search"}
+                    >
+                      <InputAdornment position="end">
+                        <IconButton
+                          data-testid="weather-search-btn"
+                          disabled={searchDisabled}
+                          onClick={() => handleSearch()}
+                        >
+                          <SearchOutlinedIcon />
+                        </IconButton>
+                      </InputAdornment>
+                    </Tooltip>
                   ),
                 },
               }}
               onChange={(evt) => handleInput(evt)}
             />
 
-            <ToggleButtonGroup
-              data-testid="unit-toggle-btn-group"
-              value={unit}
-              exclusive
-              onChange={handleSetUnit}
-              aria-label="unit selection"
-              sx={{ mt: 1 }}
-              color="success"
-            >
-              <ToggleButton
-                data-testid="unit-celsius-btn"
-                value="m"
-                aria-label="celsius button select"
-                size="small"
-              >
-                Celsius
-              </ToggleButton>
-              <ToggleButton
-                data-testid="unit-fahrenheit-btn"
-                value="f"
-                aria-label="celsius button select"
-                size="small"
-              >
-                Fahrenheit
-              </ToggleButton>
-            </ToggleButtonGroup>
+            <UnitToggle unit={unit} handleSetUnit={handleSetUnit} />
           </Stack>
         </Stack>
       </CardContent>

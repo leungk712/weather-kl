@@ -27,7 +27,7 @@ enum SettingsKey {
 import { useNavigate } from "react-router-dom";
 
 // ===== Redux ===== //
-import { useAppDispatch } from "redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { setSettings } from "redux/slices/settings/slice";
 
 // ===== Styles ===== //
@@ -36,12 +36,16 @@ export default function Settings() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const { weatherApiKey, weatherUrl } = useAppSelector(
+    (state) => state.settings
+  );
+
   const [currentSettings, setCurrentSettings] = useState<{
     url: SettingsKey | string;
     apiKey: SettingsKey | string;
   }>({
-    url: "",
-    apiKey: "",
+    url: weatherUrl || "",
+    apiKey: weatherApiKey || "",
   });
 
   const disabled = !Object.values(currentSettings)?.every(
