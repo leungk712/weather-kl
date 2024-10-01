@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 
 // ===== Components ===== //
+import Logout from "components/Logout";
 
 // ===== Constants ===== //
 
@@ -80,14 +81,18 @@ export default function AppToolbar() {
               Settings
             </Button>
 
-            <Button
-              data-testid="app-toolbar-login-btn"
-              color="inherit"
-              variant="outlined"
-              onClick={() => handleNavigation("login")}
-            >
-              Login
-            </Button>
+            {isLoggedIn ? (
+              <Logout />
+            ) : (
+              <Button
+                data-testid="app-toolbar-login-btn"
+                color="inherit"
+                variant="outlined"
+                onClick={() => handleNavigation("login")}
+              >
+                Login
+              </Button>
+            )}
 
             {isLoggedIn && avatarText ? (
               <Avatar

@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // ===== API ===== //
 
 // ===== Constants ===== //
+import { initialUser } from "./constants";
 
 // ===== Helpers ===== //
 
@@ -10,11 +11,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { State, User } from "./interfaces";
 
 export const initialState: State = {
-  user: {
-    firstName: "",
-    lastName: "",
-    email: "",
-  },
+  user: initialUser,
   isLoggedIn: false,
 };
 
@@ -26,9 +23,13 @@ export const slice = createSlice({
       state.user = { ...action.payload };
       state.isLoggedIn = true;
     },
+    reset: (state: State) => {
+      state.isLoggedIn = false;
+      state.user = initialUser;
+    },
   },
 });
 
-export const { setUser } = slice.actions;
+export const { setUser, reset } = slice.actions;
 
 export default slice.reducer;
