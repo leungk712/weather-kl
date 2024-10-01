@@ -1,4 +1,5 @@
 // ===== Material UI ===== //
+import { Box } from "@mui/material";
 
 // ===== Components ===== //
 
@@ -12,10 +13,10 @@
 
 // ===== Styles ===== //
 
-export default function LandingPage() {
+export default function Home() {
   return (
-    <>
-      <h2>Hello World</h2>
-    </>
+    <Box>
+      <h1>Introductory Welcome Message</h1>
+    </Box>
   );
 }

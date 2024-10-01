@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // ===== API ===== //
 
@@ -7,19 +7,28 @@ import { createSlice } from "@reduxjs/toolkit";
 // ===== Helpers ===== //
 
 // // ===== Interfaces ===== //
-import { State } from "./interfaces";
+import { State, User } from "./interfaces";
 
 export const initialState: State = {
-  firstName: "",
-  lastName: "",
-  email: "",
+  user: {
+    firstName: "",
+    lastName: "",
+    email: "",
+  },
   isLoggedIn: false,
 };
 
 export const slice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state: State, action: PayloadAction<User>) => {
+      state.user = { ...action.payload };
+      state.isLoggedIn = true;
+    },
+  },
 });
+
+export const { setUser } = slice.actions;
 
 export default slice.reducer;

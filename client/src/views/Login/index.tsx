@@ -1,6 +1,7 @@
 // ===== Material UI ===== //
 
 // ===== Components ===== //
+import Login from "components/Login";
 
 // ===== Constants ===== //
 
@@ -12,10 +13,6 @@
 
 // ===== Styles ===== //
 
-export default function LandingPage() {
-  return (
-    <>
-      <h2>Hello World</h2>
-    </>
-  );
+export default function LoginView() {
+  return <Login />;
 }

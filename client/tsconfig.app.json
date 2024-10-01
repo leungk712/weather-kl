@@ -1,10 +1,21 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "paths": {
+      "components/*": ["./src/components/*"],
+      "constants/*": ["./src/constants/*"],
+      "helpers/*": ["./src/helpers/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "interfaces/*": ["./src/interfaces/*"],
+      "redux/*": ["./src/redux/*"],
+      "styles/*": ["./src/styles/*"],
+      "views/*": ["./src/views/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
