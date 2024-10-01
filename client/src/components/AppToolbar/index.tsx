@@ -39,6 +39,10 @@ export default function AppToolbar() {
       return;
     }
 
+    if (isLoggedIn && path === "/") {
+      navigate("/dashboard");
+    }
+
     navigate(path);
   };
 
