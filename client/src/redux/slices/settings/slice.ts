@@ -7,11 +7,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // ===== Helpers ===== //
 
 // // ===== Interfaces ===== //
-import { State, SettingsPayload } from "./interfaces";
+import { State, SettingsPayload, WeatherStackApiResponse } from "./interfaces";
 
 export const initialState: State = {
   weatherApiKey: "",
   weatherUrl: "",
+  weatherInfo: null,
 };
 
 export const slice = createSlice({
@@ -24,9 +25,17 @@ export const slice = createSlice({
       state.weatherApiKey = weatherApiKey;
       state.weatherUrl = weatherUrl;
     },
+    setWeatherInfo: (
+      state: State,
+      action: PayloadAction<WeatherStackApiResponse>
+    ) => {
+      if (action.payload) {
+        state.weatherInfo = action.payload;
+      }
+    },
   },
 });
 
-export const { setSettings } = slice.actions;
+export const { setSettings, setWeatherInfo } = slice.actions;
 
 export default slice.reducer;

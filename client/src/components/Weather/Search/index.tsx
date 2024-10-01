@@ -18,6 +18,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 // ===== Components ===== //
 import UnitToggle from "components/Weather/UnitToggle";
+import InfoDialog from "components/Weather/InfoDialog";
 
 // ===== Constants ===== //
 import { icons } from "./constants";
@@ -25,9 +26,11 @@ import { icons } from "./constants";
 // ===== Helpers ===== //
 
 // ===== Interfaces ===== //
+import { WeatherStackApiResponse } from "redux/slices/settings/interfaces";
 
 // ===== Redux ===== //
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { useAppSelector, useAppDispatch } from "redux/hooks";
+import { setWeatherInfo } from "redux/slices/settings/slice";
 
 // ===== Styles ===== //
 
@@ -40,7 +43,7 @@ export default function Search() {
 
   const [city, setCity] = useState<string>("");
   const [unit, setUnit] = useState<string>("f");
-  const [weatherInfo, setWeatherInfo] = useState<unknown | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const searchDisabled = !weatherApiKey || !weatherUrl;
 
@@ -67,94 +70,105 @@ export default function Search() {
     try {
       await axios
         .get(`${weatherUrl}${weatherApiKey}${query}`)
-        .then((resp: unknown) => {
-          setWeatherInfo(resp);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((resp: any) => {
+          dispatch(setWeatherInfo(resp.data as WeatherStackApiResponse));
+
+          setIsDialogOpen(true);
         });
     } catch (err) {
       console.error("unable to retrieve weather information - api error", err);
     }
   };
 
+  const handleCloseDiaglog = () => {
+    setIsDialogOpen(false);
+  };
+
   return (
-    <Card
-      data-testid="weather-search-card"
-      sx={{
-        height: "100%",
-        width: 600,
-      }}
-    >
-      <CardHeader
-        data-testid="weather-search-card-header"
-        title="Premiere Weather Search"
-        subtitle="search weather for any city around the world"
-      />
-
-      <Divider />
-
-      <Alert
-        data-testid="weather-search-info-alert"
-        severity="info"
-        sx={{ m: 1 }}
+    <>
+      <Card
+        data-testid="weather-search-card"
+        sx={{
+          height: "100%",
+          width: 600,
+        }}
       >
-        You must have both weather url & api key set in 'Settings'
-      </Alert>
+        <CardHeader
+          data-testid="weather-search-card-header"
+          title="Premiere Weather Search"
+          subtitle="search weather for any city around the world"
+        />
 
-      <CardContent sx={{ p: 0 }}>
-        <Stack
-          direction="row"
-          sx={{
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: "100%",
-          }}
+        <Divider />
+
+        <Alert
+          data-testid="weather-search-info-alert"
+          severity="info"
+          sx={{ m: 1 }}
         >
+          You must have both weather url & api key set in 'Settings'
+        </Alert>
+
+        <CardContent sx={{ p: 0 }}>
           <Stack
+            direction="row"
             sx={{
-              alignItems: "center",
               justifyContent: "space-between",
-              width: "10%",
-              borderRight: "1px solid lightgray",
+              alignItems: "center",
+              height: "100%",
             }}
           >
-            {icons?.map((WeatherIcon) => (
-              <IconButton key={WeatherIcon.type} size="large" disabled={true}>
-                <WeatherIcon.icon />
-              </IconButton>
-            ))}
-          </Stack>
-
-          <Stack justifyContent="start" sx={{ width: "100%", ml: 6 }}>
-            <TextField
-              data-testid="weather-search-input"
-              label="City"
-              placeholder="Enter a city (ex. New York)"
-              sx={{ width: "75%" }}
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <Tooltip
-                      title={searchDisabled ? "settings invalid" : "search"}
-                    >
-                      <InputAdornment position="end">
-                        <IconButton
-                          data-testid="weather-search-btn"
-                          disabled={searchDisabled}
-                          onClick={() => handleSearch()}
-                        >
-                          <SearchOutlinedIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    </Tooltip>
-                  ),
-                },
+            <Stack
+              sx={{
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "10%",
+                borderRight: "1px solid lightgray",
               }}
-              onChange={(evt) => handleInput(evt)}
-            />
+            >
+              {icons?.map((WeatherIcon) => (
+                <IconButton key={WeatherIcon.type} size="large" disabled={true}>
+                  <WeatherIcon.icon />
+                </IconButton>
+              ))}
+            </Stack>
 
-            <UnitToggle unit={unit} handleSetUnit={handleSetUnit} />
+            <Stack justifyContent="start" sx={{ width: "100%", ml: 6 }}>
+              <TextField
+                data-testid="weather-search-input"
+                label="City"
+                placeholder="Enter a city (ex. New York)"
+                sx={{ width: "75%" }}
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <Tooltip
+                        title={searchDisabled ? "settings invalid" : "search"}
+                      >
+                        <InputAdornment position="end">
+                          <IconButton
+                            data-testid="weather-search-btn"
+                            disabled={searchDisabled}
+                            onClick={() => handleSearch()}
+                          >
+                            <SearchOutlinedIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      </Tooltip>
+                    ),
+                  },
+                }}
+                onChange={(evt) => handleInput(evt)}
+              />
+
+              <UnitToggle unit={unit} handleSetUnit={handleSetUnit} />
+            </Stack>
           </Stack>
-        </Stack>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      <InfoDialog open={isDialogOpen} handleClose={handleCloseDiaglog} />
+    </>
   );
 }
