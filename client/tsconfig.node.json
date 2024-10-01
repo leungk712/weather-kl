@@ -4,6 +4,16 @@
     "lib": ["ES2023"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "paths": {
+      "components/*": ["./src/components/*"],
+      "constants/*": ["./src/constants/*"],
+      "helpers/*": ["./src/helpers/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "interfaces/*": ["./src/interfaces/*"],
+      "redux/*": ["./src/redux/*"],
+      "styles/*": ["./src/styles/*"],
+      "views/*": ["./src/views/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",

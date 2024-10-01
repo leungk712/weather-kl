@@ -1,7 +1,7 @@
 // ===== Material UI ===== //
 
 // ===== Components ===== //
-import Home from "components/Home";
+import Login from "components/Login";
 
 // ===== Constants ===== //
 
@@ -13,6 +13,6 @@ import Home from "components/Home";
 
 // ===== Styles ===== //
 
-export default function LandingPage() {
-  return <Home />;
+export default function LoginView() {
+  return <Login />;
 }
