@@ -11,6 +11,9 @@ import LandingPage from "./views/LandingPage";
 import LoginView from "views/Login";
 import SettingsView from "views/Settings";
 
+// ===== Styles ===== //
+import { flexCenter } from "styles/index";
+
 function App() {
   const location = useLocation();
 
@@ -20,7 +23,6 @@ function App() {
       sx={{
         height: "100vh",
         width: "100%",
-        flexGrow: 1,
         m: 0,
         p: 0,
       }}
@@ -32,9 +34,7 @@ function App() {
       <Box
         data-testid="app-content-container"
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          ...flexCenter,
           minHeight: "85vh",
           flexGrow: 1,
         }}
@@ -47,15 +47,7 @@ function App() {
         </Routes>
       </Box>
 
-      <Box
-        data-testid="app-footer-container"
-        sx={{
-          width: "100%",
-          mt: "auto",
-        }}
-      >
-        <AppFooter />
-      </Box>
+      <AppFooter />
     </Container>
   );
 }

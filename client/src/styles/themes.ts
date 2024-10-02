@@ -12,3 +12,5 @@ export const theme = createTheme({
     },
   },
 });
+
+export const DEFAULT_BG_COLOR = "#87A878";

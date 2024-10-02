@@ -34,6 +34,8 @@ import { WeatherStackApiResponse } from "redux/slices/settings/interfaces";
 import { useAppSelector } from "redux/hooks";
 
 // ===== Styles ===== //
+import { flexCenter } from "styles/index";
+import { DEFAULT_BG_COLOR } from "styles/themes";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -69,7 +71,7 @@ export default function InfoDialog({
       TransitionComponent={Transition}
     >
       <AppBar data-testid="weather-info-toolbar" sx={{ position: "relative" }}>
-        <Toolbar sx={{ backgroundColor: "#87A878", width: "100%" }}>
+        <Toolbar sx={{ backgroundColor: DEFAULT_BG_COLOR, width: "100%" }}>
           <IconButton
             data-testid="weather-info-dialog-close-btn"
             edge="start"
@@ -80,7 +82,12 @@ export default function InfoDialog({
             <CloseIcon />
           </IconButton>
 
-          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+          <Typography
+            data-testid="weather-info-name-country"
+            sx={{ ml: 2, flex: 1 }}
+            variant="h6"
+            component="div"
+          >
             {name}, {country}
           </Typography>
         </Toolbar>
@@ -88,9 +95,7 @@ export default function InfoDialog({
 
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          ...flexCenter,
           width: "100%",
           height: "100%",
         }}
@@ -133,11 +138,11 @@ export default function InfoDialog({
               Feels Like: {weatherInfo?.current?.temperature}&deg; degrees
             </Typography>
 
-            <Typography data-testid="weather-info-feels-like">
+            <Typography data-testid="weather-info-humidity">
               Humidity: {weatherInfo?.current?.humidity}%
             </Typography>
 
-            <Typography data-testid="weather-info-feels-like">
+            <Typography data-testid="weather-info-wind-speed">
               Wind: {weatherInfo?.current?.wind_speed}{" "}
               {weatherInfo?.current?.wind_dir}
             </Typography>

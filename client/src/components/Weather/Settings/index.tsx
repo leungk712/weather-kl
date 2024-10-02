@@ -18,6 +18,8 @@ import {
 // ===== Helpers ===== //
 
 // ===== Interfaces ===== //
+import { Path } from "interfaces/Path";
+
 enum SettingsKey {
   URL = "url",
   ApiKey = "apiKey",
@@ -31,6 +33,7 @@ import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { updateSettings } from "redux/slices/settings/endpoints";
 
 // ===== Styles ===== //
+import { flexCenter } from "styles/index";
 
 export default function Settings() {
   const dispatch = useAppDispatch();
@@ -75,7 +78,7 @@ export default function Settings() {
     )
       .unwrap()
       .then(() => {
-        navigate("/dashboard");
+        navigate(`/${Path.Dashboard}`);
       })
       .catch((err) => {
         console.error("uh oh. unable to update your settings", err);
@@ -92,14 +95,7 @@ export default function Settings() {
       <Divider />
 
       <CardContent data-testid="settings-card-content">
-        <Stack
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          spacing={2}
-        >
+        <Stack sx={{ ...flexCenter }} spacing={2}>
           <TextField
             data-testid="weather-url-input"
             label="weather url"
@@ -109,7 +105,7 @@ export default function Settings() {
           />
 
           <TextField
-            data-testid="weather-api-input"
+            data-testid="weather-api-key-input"
             label="weather api key"
             value={currentSettings[SettingsKey.ApiKey] || ""}
             sx={{ width: "100%" }}
