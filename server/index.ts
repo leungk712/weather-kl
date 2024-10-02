@@ -32,26 +32,11 @@ app.get("/users", async (_req: Request, res: Response) => {
 app.post("/user", async (req: Request, res: Response) => {
   const { firstName, lastName, email } = req.body;
 
-  const user = await User.findOrCreate({
+  const [user] = await User.findOrCreate({
     where: { firstName, lastName, email },
   });
 
   res.json(user);
-});
-
-app.post("/settings", async (req: Request, res: Response) => {
-  const { weatherApiKey, weatherUrl, email, userId } = req.body;
-
-  const settings = await Settings.findOrCreate({
-    where: { email },
-    defaults: {
-      weatherApiKey,
-      weatherUrl,
-      userId,
-    },
-  });
-
-  res.json(settings);
 });
 
 app.put("/settings", async (req: Request, res: Response) => {
@@ -60,6 +45,22 @@ app.put("/settings", async (req: Request, res: Response) => {
   const userSettings = await Settings.findOne({
     where: { email, userId },
   });
+
+  console.log("userSettings", userSettings);
+
+  if (!userSettings) {
+    const [settings] = await Settings.findOrCreate({
+      where: { email, userId },
+      defaults: {
+        weatherApiKey,
+        weatherUrl,
+      },
+    });
+
+    res.json(settings);
+
+    return;
+  }
 
   await userSettings?.update({
     weatherApiKey,
