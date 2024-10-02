@@ -6,9 +6,20 @@ export interface State {
   weatherUrl: string;
   weatherInfo: WeatherStackApiResponse | null;
   fetchWeatherStatus: StatusAndError;
+  updateSettingsStatus: StatusAndError;
 }
 
 export type SettingsPayload = Pick<State, "weatherApiKey" | "weatherUrl">;
+
+export interface SettingsApiResponse {
+  id: number;
+  weatherUrl: string;
+  weatherApiKey: string;
+  email: string;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface WeatherStackApiResponse {
   request: {

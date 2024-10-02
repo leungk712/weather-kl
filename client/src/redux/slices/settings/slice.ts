@@ -8,18 +8,24 @@ const { PENDING, FULFILLED, REJECTED } = API_LIFECYCLE_STATUS;
 import { statusAndError } from "redux/statuses";
 
 // ===== Endpoints ===== //
-import { fetchWeather } from "./endpoints";
+import { fetchWeather, updateSettings } from "./endpoints";
 
 // ===== Helpers ===== //
 
 // // ===== Interfaces ===== //
-import { State, SettingsPayload, WeatherStackApiResponse } from "./interfaces";
+import {
+  State,
+  SettingsPayload,
+  WeatherStackApiResponse,
+  SettingsApiResponse,
+} from "./interfaces";
 
 export const initialState: State = {
   weatherApiKey: "",
   weatherUrl: "",
   weatherInfo: null,
   fetchWeatherStatus: statusAndError,
+  updateSettingsStatus: statusAndError,
 };
 
 export const slice = createSlice({
@@ -63,6 +69,28 @@ export const slice = createSlice({
       )
       .addCase(fetchWeather.rejected, (state: State, action) => {
         state.fetchWeatherStatus = {
+          status: REJECTED,
+          error: action.error.message,
+        };
+      })
+      .addCase(updateSettings.pending, (state: State) => {
+        state.updateSettingsStatus = {
+          status: PENDING,
+          error: "",
+        };
+      })
+      .addCase(
+        updateSettings.fulfilled,
+        (state: State, action: PayloadAction<SettingsApiResponse>) => {
+          const { weatherApiKey, weatherUrl } = action.payload;
+
+          state.updateSettingsStatus.status = FULFILLED;
+          state.weatherApiKey = weatherApiKey;
+          state.weatherUrl = weatherUrl;
+        }
+      )
+      .addCase(updateSettings.rejected, (state: State, action) => {
+        state.updateSettingsStatus = {
           status: REJECTED,
           error: action.error.message,
         };

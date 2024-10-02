@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 
 // ===== Redux ===== //
 import { useAppDispatch } from "redux/hooks";
-import { setUser } from "redux/slices/user/slice";
+import { setUser } from "redux/slices/user/endpoints";
 
 export default function GoogleAuth() {
   const dispatch = useAppDispatch();
@@ -44,9 +44,16 @@ export default function GoogleAuth() {
         firstName: given_name,
       };
 
-      dispatch(setUser(payload));
+      dispatch(setUser(payload))
+        .unwrap()
+        .then(() => {
+          navigate("/dashboard");
+        })
+        .catch((err) => {
+          console.error("uh oh, unable to set user", err);
 
-      navigate("/dashboard");
+          navigate("/");
+        });
     }
   };
 

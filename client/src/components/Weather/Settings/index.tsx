@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
 
 // ===== Redux ===== //
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { setSettings } from "redux/slices/settings/slice";
+import { updateSettings } from "redux/slices/settings/endpoints";
 
 // ===== Styles ===== //
 
@@ -39,6 +39,8 @@ export default function Settings() {
   const { weatherApiKey, weatherUrl } = useAppSelector(
     (state) => state.settings
   );
+  const { user } = useAppSelector((state) => state.user);
+  const { email, id } = user;
 
   const [currentSettings, setCurrentSettings] = useState<{
     url: SettingsKey | string;
@@ -64,13 +66,20 @@ export default function Settings() {
 
   const handleSave = () => {
     dispatch(
-      setSettings({
+      updateSettings({
         weatherApiKey: currentSettings.apiKey,
         weatherUrl: currentSettings.url,
+        email,
+        userId: id as number,
       })
-    );
-
-    navigate("/dashboard");
+    )
+      .unwrap()
+      .then(() => {
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        console.error("uh oh. unable to update your settings", err);
+      });
   };
 
   return (
