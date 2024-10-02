@@ -31,8 +31,8 @@ This application allows a user to log into a web application via Google OAuth. A
 
 - [Node](https://nodejs.org/en)
 - [Express](https://expressjs.com/)
-- [Better-Sqlite3](https://www.npmjs.com/package/better-sqlite3)
-- [Knex](https://www.npmjs.com/package/knex)
+- [SQLite3](https://github.com/TryGhost/node-sqlite3)
+- [Sequelize](https://sequelize.org/)
 
 1. Open another terminal instance
 2. `cd server` directory
