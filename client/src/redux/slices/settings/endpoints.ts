@@ -1,5 +1,29 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+// ===== API ===== //
 import axios from "axios";
+import { instance } from "redux/api";
+
+// ===== Interfaces ===== //
+import { SettingsPayload } from "./interfaces";
+
+interface UpdateSettingsPayload extends SettingsPayload {
+  email: string;
+  userId: number;
+}
+
+export const updateSettings = createAsyncThunk(
+  "updateSettings",
+  async (payload: UpdateSettingsPayload, { rejectWithValue }) => {
+    try {
+      const { data } = await instance.put(`/settings`, payload);
+
+      return data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
 
 export const fetchWeather = createAsyncThunk(
   "fetchWeather",
