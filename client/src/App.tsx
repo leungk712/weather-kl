@@ -35,7 +35,7 @@ function App() {
         data-testid="app-content-container"
         sx={{
           ...flexCenter,
-          minHeight: "85vh",
+          minHeight: "calc(100% - 110px)",
           flexGrow: 1,
         }}
       >
@@ -47,7 +47,9 @@ function App() {
         </Routes>
       </Box>
 
-      <AppFooter />
+      <Box sx={{ mt: "auto" }}>
+        <AppFooter />
+      </Box>
     </Container>
   );
 }

@@ -27,6 +27,10 @@ This application allows a user to log into a web application via Google OAuth. A
 - WeatherStack base Url `https://api.weatherstack.com/current?access_key=`
 - WeatherStack API Key can be generated via a [Free Account](https://weatherstack.com/signup/free)
 
+### Testing
+
+- To run tests, in your terminal run `npm run test`
+
 ## Server
 
 - [Node](https://nodejs.org/en)

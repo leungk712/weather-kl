@@ -21,7 +21,7 @@ export default function AppFooter() {
       data-testid="app-footer"
       sx={{
         width: "100%",
-        minHeight: 46,
+        height: 46,
         ...flexCenter,
         backgroundColor: DEFAULT_BG_COLOR,
       }}
