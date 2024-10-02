@@ -67,8 +67,8 @@ export default function Settings() {
   const handleSave = () => {
     dispatch(
       updateSettings({
-        weatherApiKey: currentSettings.apiKey,
-        weatherUrl: currentSettings.url,
+        weatherApiKey: currentSettings.apiKey.trim(),
+        weatherUrl: currentSettings.url.trim(),
         email,
         userId: id as number,
       })

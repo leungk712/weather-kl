@@ -19,11 +19,11 @@ export default function AppFooter() {
       data-testid="app-footer"
       sx={{
         width: "100%",
+        height: 40,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#87A878",
-        p: 2,
       }}
     >
       <Typography

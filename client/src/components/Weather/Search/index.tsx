@@ -63,7 +63,7 @@ export default function Search() {
   };
 
   const handleSearch = () => {
-    const query = `&query=${city.replace(" ", "%20")}&units=${unit}`;
+    const query = `&query=${city.trim().replace(" ", "%20")}&units=${unit}`;
 
     const payload = {
       weatherUrl,
