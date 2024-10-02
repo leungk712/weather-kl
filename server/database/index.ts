@@ -1,7 +1,19 @@
-import Database from "better-sqlite3";
-import knex from "knex";
-const config = require("./knexfile");
+import { Sequelize, DataTypes } from "sequelize";
 
-export const db = new Database("./data.db");
+export const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: ":memory:",
+});
 
-db.pragma("journal_mode = WAL");
+export const User = sequelize.define("User", {
+  firstName: DataTypes.STRING,
+  lastName: DataTypes.STRING,
+  email: DataTypes.STRING,
+});
+
+export const Settings = sequelize.define("Settings", {
+  weatherUrl: DataTypes.STRING,
+  weatherApiKey: DataTypes.STRING,
+  email: DataTypes.STRING,
+  userId: DataTypes.INTEGER,
+});

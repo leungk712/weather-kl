@@ -2,73 +2,90 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-import { db } from "./database";
-import { initialUserQuery } from "./database/user/queries";
-import { initialSettingsQuery } from "./database/settings/queries";
+
+// ===== Schemas ===== //
+import { User, Settings, sequelize } from "./database";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-db.exec(initialUserQuery);
-db.exec(initialSettingsQuery);
-
 app.use(cors());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get("/", (req: Request, res: Response) => {
-  console.log("hello world me!");
-  res.send("Express + TypeScript Server");
+app.get("/", (_req: Request, res: Response) => {
+  res.send("Node, Express, TypeScript, SQLite server");
 });
 
-app.get("/health", async (req: Request, res: Response) => {
-  console.log("hello health check");
+app.get("/health", async (_req: Request, res: Response) => {
+  res.send("server is up, healthy, and running!");
+});
 
-  try {
-    const users = await db.prepare("SELECT * from users");
-    const settings = await db.prepare("SELECT * from settings");
+app.get("/users", async (_req: Request, res: Response) => {
+  const users = await User.findAll();
 
-    const resp = users.get();
-    const settingsResp = settings.get();
-
-    console.log("users", resp);
-    console.log("settings", settingsResp);
-
-    // res.send(resp);
-
-    res.json({ users: resp, settings: settingsResp });
-  } catch (err) {
-    console.log("err - health", err);
-  }
+  res.json(users);
 });
 
 app.post("/user", async (req: Request, res: Response) => {
-  console.log("hello set user");
+  const { firstName, lastName, email } = req.body;
 
-  try {
-    const insert = db.prepare(
-      "INSERT INTO users(first_name, last_name, email) VALUES(@first_name, @last_name, @email)"
-    );
+  const user = await User.findOrCreate({
+    where: { firstName, lastName, email },
+  });
 
-    const insertMany = db.transaction((users) => {
-      for (const user of users) insert.run(user);
+  res.json(user);
+});
+
+app.post("/settings", async (req: Request, res: Response) => {
+  const { weatherApiKey, weatherUrl, email, userId } = req.body;
+
+  const settings = await Settings.findOrCreate({
+    where: { email },
+    defaults: {
+      weatherApiKey,
+      weatherUrl,
+      userId,
+    },
+  });
+
+  res.json(settings);
+});
+
+app.put("/settings", async (req: Request, res: Response) => {
+  const { weatherApiKey, weatherUrl, email, userId } = req.body;
+
+  const userSettings = await Settings.findOne({
+    where: { email, userId },
+  });
+
+  await userSettings?.update({
+    weatherApiKey,
+    weatherUrl,
+  });
+
+  await userSettings?.save();
+
+  const updatedUserSettings = await userSettings?.reload();
+
+  res.json(updatedUserSettings);
+});
+
+app.get("/settings", async (_req: Request, res: Response) => {
+  const settings = await Settings.findAll();
+
+  res.json(settings);
+});
+
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`[server]: Server is running at http://localhost:${port}`);
     });
-
-    await insertMany([
-      {
-        first_name: "Michael",
-        last_name: "J",
-        email: "michael@bulls.com",
-      },
-    ]);
-
-    res.send("created user");
-  } catch (err) {
-    console.log("err inside user", err);
-  }
-});
-
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+  })
+  .catch((err) => {
+    console.log("error running sequelize sync command", err);
+  });
