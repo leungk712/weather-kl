@@ -12,6 +12,8 @@ import { Box, Typography } from "@mui/material";
 // ===== Redux ===== //
 
 // ===== Styles ===== //
+import { DEFAULT_BG_COLOR } from "styles/themes";
+import { flexCenter } from "styles/index";
 
 export default function AppFooter() {
   return (
@@ -19,11 +21,9 @@ export default function AppFooter() {
       data-testid="app-footer"
       sx={{
         width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#87A878",
-        p: 2,
+        minHeight: 46,
+        ...flexCenter,
+        backgroundColor: DEFAULT_BG_COLOR,
       }}
     >
       <Typography

@@ -25,6 +25,7 @@ import GoogleAuth from "./GoogleAuth";
 // ===== Redux ===== //
 
 // ===== Styles ===== //
+import { flexCenter } from "styles/index";
 
 export default function Login() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -54,9 +55,7 @@ export default function Login() {
 
       <Stack
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          ...flexCenter,
           width: "auto",
           p: 2,
         }}

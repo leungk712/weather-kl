@@ -12,6 +12,7 @@ import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 // ===== Helpers ===== //
 
 // ===== Interfaces ===== //
+import { Path } from "interfaces/Path";
 
 interface Credentials extends JwtPayload {
   email: string;
@@ -47,7 +48,7 @@ export default function GoogleAuth() {
       dispatch(setUser(payload))
         .unwrap()
         .then(() => {
-          navigate("/dashboard");
+          navigate(`/${Path.Dashboard}`);
         })
         .catch((err) => {
           console.error("uh oh, unable to set user", err);

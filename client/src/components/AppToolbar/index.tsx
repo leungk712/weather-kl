@@ -18,6 +18,7 @@ import Logout from "components/Logout";
 import { generateAvatarName } from "./helpers";
 
 // ===== Interfaces ===== //
+import { Path } from "interfaces/Path";
 
 // ===== React Router ===== //
 import { useNavigate } from "react-router-dom";
@@ -26,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "redux/hooks";
 
 // ===== Styles ===== //
+import { DEFAULT_BG_COLOR } from "styles/themes";
 
 export default function AppToolbar() {
   const navigate = useNavigate();
@@ -36,12 +38,12 @@ export default function AppToolbar() {
   const avatarText = generateAvatarName(firstName, lastName);
 
   const handleNavigation = (path = "/") => {
-    if (path === "settings" && !isLoggedIn) {
+    if (path === Path.Settings && !isLoggedIn) {
       return;
     }
 
     if (isLoggedIn && path === "/") {
-      navigate("/dashboard");
+      navigate(`/${Path.Dashboard}`);
     }
 
     navigate(path);
@@ -55,7 +57,7 @@ export default function AppToolbar() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: "#87A878",
+            backgroundColor: DEFAULT_BG_COLOR,
           }}
         >
           <Typography

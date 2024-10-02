@@ -9,6 +9,7 @@ This application allows a user to log into a web application via Google OAuth. A
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Redux Toolkit (State Management)](https://redux-toolkit.js.org/)
+- [React Router](https://reactrouter.com/en/main)
 - [Google OAuth](https://www.npmjs.com/package/@react-oauth/google)
 - [Axios](https://axios-http.com/docs/intro)
 - [Vitest](https://vitest.dev/)
@@ -18,8 +19,8 @@ This application allows a user to log into a web application via Google OAuth. A
 2. `cd client` directory
 3. create an `.env` file and populate it with values from `.env.sample`
 4. `npm install`
-5. `npm run dev`
-6. You can open the app via `localhost:5173` on your browser
+5. `npm run build`
+6. A dist file should be generated which will be served by the server
 
 ### WeatherStack
 
@@ -38,3 +39,4 @@ This application allows a user to log into a web application via Google OAuth. A
 3. create an `.env` file and populate it with the values from `.env.sample`
 4. `npm install`
 5. `npm run start`
+6. Open a browser and go to `localhost:(3010|3000)`
