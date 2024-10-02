@@ -9,6 +9,7 @@ This application allows a user to log into a web application via Google OAuth. A
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Redux Toolkit (State Management)](https://redux-toolkit.js.org/)
+- [React Router](https://reactrouter.com/en/main)
 - [Google OAuth](https://www.npmjs.com/package/@react-oauth/google)
 - [Axios](https://axios-http.com/docs/intro)
 - [Vitest](https://vitest.dev/)
