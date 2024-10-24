@@ -4,6 +4,8 @@
 
 This application allows a user to log into a web application via Google OAuth. After logging in, the user is required to set a base url and api key targeting the WeatherStack API base. After the settings are set, the user can now type in cities from around the world retrieving general weather information
 
+![demo_gif](https://github.com/user-attachments/assets/46200d7b-353b-46f7-83d7-3509fe881485)
+
 ## Client
 
 - [React](https://react.dev/)
