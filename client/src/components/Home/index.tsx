@@ -21,8 +21,7 @@ export default function Home() {
       <Card data-testid="home-intro-card" sx={{ height: "100%", width: 400 }}>
         <CardContent data-testid="home-intro-card-content">
           <Typography variant="h6">
-            Hello! Welcome to ResFrac Kev L's Demo, home of the premiere weather
-            app.
+            Hello! Welcome to Weather KL, home of the premiere weather app.
           </Typography>
 
           <Typography variant="body1">

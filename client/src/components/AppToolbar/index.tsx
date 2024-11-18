@@ -70,7 +70,7 @@ export default function AppToolbar() {
               },
             }}
           >
-            ResFrac Kev L
+            Weather KL
           </Typography>
 
           <Stack direction="row" spacing={2}>
