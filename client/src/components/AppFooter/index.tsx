@@ -1,6 +1,3 @@
-// ===== Material UI ===== //
-import { Box, Typography } from "@mui/material";
-
 // ===== Components ===== //
 
 // ===== Constants ===== //
@@ -11,28 +8,17 @@ import { Box, Typography } from "@mui/material";
 
 // ===== Redux ===== //
 
-// ===== Styles ===== //
-import { DEFAULT_BG_COLOR } from "styles/themes";
-import { flexCenter } from "styles/index";
-
 export default function AppFooter() {
+  const year = new Date().getFullYear();
+
   return (
-    <Box
+    <div
       data-testid="app-footer"
-      sx={{
-        width: "100%",
-        height: 46,
-        ...flexCenter,
-        backgroundColor: DEFAULT_BG_COLOR,
-      }}
+      className="h-12 w-100 bg-meadow justify-items-center content-center"
     >
-      <Typography
-        data-testid="app-footer-text"
-        variant="body2"
-        sx={{ fontWeight: "bold" }}
-      >
-        Kevin L Copyright 2024
-      </Typography>
-    </Box>
+      <p data-testid="app-footer-text" className="text-white font-bold">
+        Kevin L Copyright {year}
+      </p>
+    </div>
   );
 }
